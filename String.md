@@ -14,6 +14,7 @@ Caderno pessoal de estudos para certificação OCJP11 (1z0-819).
 - [Pool de Strings](#pool)
 - [Principais métodos](#metodos)
 - [Pegadinhas da prova](#pegadinhas)
+- [Principais Exceptions](#exceptions)
 
 ---
 
@@ -215,3 +216,9 @@ A menos que seja chamado o método `intern()` que irá levar em conta a String d
 ## <a id="pegadinhas"></a> Pegadinhas da prova
 
 - `replace(arg1, agr2)` &rarr; Se `agr1 == agr2`, *o mesmo objeto* é retornado, em vez de um `new`. Atenção nas questões sobre igualdade de String.
+
+## <a id="exceptions"></a> Principais Exceptions
+`java.lang.NullPointerException`  
+`java.lang.StringIndexOutOfBoundsException`
+``
+``

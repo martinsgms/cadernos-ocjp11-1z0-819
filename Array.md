@@ -28,6 +28,14 @@ int [] f;
 ````
 Porém, ao utilizar `var`, os colchetes não são permitidos em nenhuma posição. Além disso, neste caso **o array deve obrigatóriamente ser inicializado com um tipo explícito**.
 
+````Java
+var d = new int[3];
+var e = new int[]{1, 2, 3};
+// compile errors
+// var[] f = new int[3]; 
+// var f = {1, 2, 3}; 
+````
+
 ## <a id="inicializacao"></a> Inicialização
 Existem basicamente 3 formas de inicializar um array, sendo elas:
 

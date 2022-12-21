@@ -29,13 +29,12 @@ Um **membro** é tudo aquilo que você pode acessar com `.` (ponto - operador de
 ## Modificadores de acesso (visibilidade)
 Aplicável a membros e construtores. Aplicando o modificador, o membro será visível...
 
-**private** &rarr; somente na própria classe.
-
-**package *(default)*** &rarr; na própria classe + pacote;
-
-**protected** &rarr; na própria classe + pacote + filhas
-
-**public**  &rarr; em todo o módulo.
+| Visibilidade  | Própria classe | Pacote | Filhas | Módulo
+|-------|-------|-------|-------|-------|
+**private** | :white_check_mark: | :x: | :x: | :x:
+**package *(default)*** | :white_check_mark: | :white_check_mark: | :x: | :x:
+**protected** | :white_check_mark: | :white_check_mark: | :white_check_mark: | :x:
+**public** | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:
 
 ### Ordem de Restritividade
 private **é+q** package **é+q** protected **é+q** public

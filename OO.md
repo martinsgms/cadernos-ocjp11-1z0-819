@@ -29,7 +29,7 @@ Um **membro** é tudo aquilo que você pode acessar com `.` (ponto - operador de
 ## Modificadores de acesso (visibilidade)
 Aplicável a membros e construtores. Aplicando o modificador, o membro será visível...
 
-| Visibilidade  | Própria classe | Pacote | Filhas | Módulo
+| Modificador  | Própria classe | Pacote | Filhas | Módulo
 |-------|-------|-------|-------|-------|
 **private** | :white_check_mark: | :x: | :x: | :x:
 **package *(default)*** | :white_check_mark: | :white_check_mark: | :x: | :x:
@@ -45,27 +45,38 @@ private **é+q** package **é+q** protected **é+q** public
 **Atenção!** Estes dois modificadores se contradizem, eles **NUNCA** podem ser usados juntos.
 
 ### Em classes
-**final** &rarr; indica que a classe não poderá ser extendida (herança).  
-**abstract** &rarr; indica que a classe não poderá ser instânciada.
+
+| Modificador  | Função |
+|-------|-------|
+**final** | indica que a classe não poderá ser extendida (herança).  
+**abstract** | indica que a classe não poderá ser instânciada.
 
 ### Em atributos
-**final** &rarr; indica uma constante. A inicialização é obrigatória no momento da inicializaçãoe e seu valor não poderá ser alterado. 
-**abstract** &rarr; N/A.
+
+| Modificador  | Função |
+|-------|-------|
+**final** | indica uma constante. A inicialização é obrigatória no momento da inicializaçãoe e seu valor não poderá ser alterado. 
+**abstract** | N/A.
 
 ### Em métodos
-**final** &rarr; indica que o método NÃO PODE ser sobrescrito.  
-**abstract** &rarr; indica que o método PRECISA ser sobrescrito.
+| Modificador  | Função |
+|-------|-------|
+**final** | indica que o método NÃO PODE ser sobrescrito.  
+**abstract** | indica que o método PRECISA ser sobrescrito.
 
 ## Outros modificadores
-**strictfp**  
-**volatile**  
-**transient**  
-**native**  
+| Modificador  | Função |
+|-------|-------|
+**strictfp**  | ...
+**volatile**  | ...
+**transient**  | ...
+**native**  | ...
 
 ## Interface
+É uma classe abstrata que 
+representa uma ***intenção geral*, que pode tomar diferentes *formas específicas*** (polimorfismo). É o mais alto nível de abstração e de baixo acoplamento possível ao definir uma classe.  
+Exemplo: A *intenção geral* é calcular um imposto, e eu posso calcular diferentes impostos, cada um de *forma específica*.  
 
-Representa uma *intenção*, que pode tomar diferentes formas (polimorfismo). Exemplo: A intenção é calcular um imposto, e eu posso calcular diferentes impostos, cada um a sua maneira.  
-É o mais alto nível de abstração e de baixo acoplamento possível.
 
 ````Java
 public interface Imposto {
@@ -77,13 +88,31 @@ public interface Imposto {
 > Interfaces são ótimas para implementar polimorfismo. A intenção que definem pode tomar diferentes formas baseado no objeto que foi criado.
 
 ### Particularidades
-1- Os **métodos** são `public abstract` por padrão (caracteristica que faz com que as classes *concretas* sejam obrigadas a implementar seus métodos).
+#### 1. Modificador *default* em métodos
+Os **métodos** são `public abstract` por padrão (caracteristica que faz com que as classes *concretas* sejam obrigadas a implementar seus métodos). Isto é:
 ````Java
-interface Imposto {
-	void getAliquota();
-	Double calculaImposto();
-}
+void getAliquota();
+Double calculaImposto();
 ````
-
-- Também são permitidos métodos `default`, `private`, `static` e `strictfp`
-- As **constantes** são `public static final` por padrão.
+é o mesmo que:
+````Java
+public abstract void getAliquota();
+public abstract Double calculaImposto();
+````
+#### 2. Métodos `private`
+...
+#### 3. Métodos `default`  
+...
+#### 4. Métodos `static`  
+...
+#### 5. Métodos `strictfp`
+...
+#### 5. Constantes
+As **constantes** são `public`, `static` e `final` por padrão. E podem ser acessadas via *herança*, ou de forma *direta*, i.e. `Interface.CONSTANTE`.
+````Java
+int ZERO = 0;
+````
+é o mesmo que 
+````Java
+public static final int ZERO = 0;
+````

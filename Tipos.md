@@ -63,12 +63,16 @@ São aqueles que possuem diretamente um valor associado. **Tipos primitivos nunc
 | `boolean` | `false` ou `true` | 1 bit
 
 #### Valores Literais
-Exemplos:
-- `1` &rarr; é um `int`.
+| Valor  | Tipo| 
+|-------|-------|
+| 1 | `int` |
+| 1.0 | `double` |
+| 1.0l | `long` |
+| 1.0d | `double` |
+| 1.0f | `float` |
+| '\u0000' | `char` |
+
 > Valores `int` literais podem ser atribuídos a tipos menores sem casting.
-- `1.0` &rarr; é um `double`.
-- `1.0d` &rarr; é um `double`.
-- `1.0f` &rarr; é um `float`.
 
 #### Base numérica alternativa
 Podem ser atribuídas a qualquer tipo primitivo numérico e `char`.
@@ -78,6 +82,42 @@ Podem ser atribuídas a qualquer tipo primitivo numérico e `char`.
 
 ### Referências
 São ponteiros que apontam para um objeto na memória.
+
+## <a id="narrowing"></a> Narrowing
+Conversão para um tipo de menor capacidade.  Possui risco de overflow.  
+````Java
+// int para byte OK
+byte value = 1;
+````
+Este procedimento deve ocorrer em tempo de compilação, caso contrário, ocorre erro.
+
+````Java
+int intValue = 1
+byte value = intValue; // compile error
+````
+O compilador não executará o código para saber o valor que `intValue` tem. Logo o narrowing não ocorre automaticamente.
+
+Para double não ocorre narrowing 
+implicitamente para outros tipos. É sempre necessário casting explícito.
+````Java
+// float value = 1.0 NÃO COMPILA
+float value = (float) 1.0 
+````
+### Overflow
+Se o valor atribuído ultrapassar a capacidade do tipo, causará **overflow**.  
+No caso byte possui um range de -128 a 127. Logo, um valor fora deste intervalo causará overflow (ou underflow) e precisará de casting explícito para compilar. Porém, mesmo compilando, o resultado será imprevisível.
+````Java
+byte value = (byte) 130;
+// value terá um valor imprevisível devido ao overflow
+````
+**Em double e float nunca ocorre overflow**, porque eles utilizam notação científica para representar o valor (isso causa perda de precisão).
+
+## <a id="widening"></a> Widening
+Conversão para um tipo de maior capacidade. Basicamente atribuir um tipo menor a um maior.
+````Java
+// widening válido. int cabe em long.
+long number = 1;
+````
 
 ## <a id="casting"></a> Casting
 
@@ -155,3 +195,11 @@ Quem determina como os métodos são implementados é o **objeto**.
 > **Pegadinha de prova!** Ao declarar um array, a sintaxe `[]` não é permitida do lado esquerdo da atribuição (`=`). E no lado direito, o tipo do array deve ser declarado com `new int[] {1, 3}`, `new int[2]` ou `new int[2][]`, por exemplo. A atribuição literal usando diretamente `{}` causara erro de compilação.
 
 ## <a id="varargs"></a> Varags
+
+## <a id="resumo"></a> Resumo
+- Variáveis locais precisam ser inicializadas antes de utilizadas.
+- Membros estáticos e de instância são inicializados por default
+- Literais inteiros são `int`
+- Literais decimais são `float`
+- Em `double` e `float` não ocorre overflow
+- `null` não é um valor válido para tipos primitivos.6

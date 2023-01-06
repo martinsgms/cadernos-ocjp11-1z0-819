@@ -85,39 +85,39 @@ São ponteiros que apontam para um objeto na memória.
 
 ## <a id="narrowing"></a> Narrowing
 Conversão para um tipo de menor capacidade.  Possui risco de overflow.  
-````Java
+```Java
 // int para byte OK
 byte value = 1;
-````
+```
 Este procedimento deve ocorrer em tempo de compilação, caso contrário, ocorre erro.
 
-````Java
+```Java
 int intValue = 1
 byte value = intValue; // compile error
-````
+```
 O compilador não executará o código para saber o valor que `intValue` tem. Logo o narrowing não ocorre automaticamente.
 
 Para double não ocorre narrowing 
 implicitamente para outros tipos. É sempre necessário casting explícito.
-````Java
+```Java
 // float value = 1.0 NÃO COMPILA
 float value = (float) 1.0 
-````
+```
 ### Overflow
 Se o valor atribuído ultrapassar a capacidade do tipo, causará **overflow**.  
 No caso byte possui um range de -128 a 127. Logo, um valor fora deste intervalo causará overflow (ou underflow) e precisará de casting explícito para compilar. Porém, mesmo compilando, o resultado será imprevisível.
-````Java
+```Java
 byte value = (byte) 130;
 // value terá um valor imprevisível devido ao overflow
-````
+```
 **Em double e float nunca ocorre overflow**, porque eles utilizam notação científica para representar o valor (isso causa perda de precisão).
 
 ## <a id="widening"></a> Widening
 Conversão para um tipo de maior capacidade. Basicamente atribuir um tipo menor a um maior.
-````Java
+```Java
 // widening válido. int cabe em long.
 long number = 1;
-````
+```
 
 ## <a id="casting"></a> Casting
 
@@ -126,22 +126,22 @@ long number = 1;
 #### Overflow
 **Regra**: tipos menores  cabem em tipos maiores e não pedem casting explícito. Mesmo assim, pode ocorrer **overflow**, isto é, quando o tipo maior excede o valor máximo do tipo menor, resultando `-1`.
 
-````Java
+```Java
     byte b = (byte) Integer.MAX_VALUE;
     System.out.println(b); // -1
-````
+```
 
 #### Downcasting
 Casting do tipo **maior para menor**.  
 É necessário **casting explícito** e observar casos de **overflow**.
 
-````Java
+```Java
     int i = 10;
     
     byte b = (byte) i;
     short s = (short) i;
     char c = (char) i;
-````
+```
 > Exceção: de `float` para `double` não precisa de cast.
 
 > Nota: `char` **sempre irá precisar de cast explícito** por não ser "puramente" um tipo inteiro numérico.
@@ -149,33 +149,33 @@ Casting do tipo **maior para menor**.
 #### Upcasting
 Casting do tipo **menor para maior**.  
 Ocorre casting implícito, por conta da regra que um tipo menor cabe em um tipo maior.
-````Java
+```Java
     int i = 10;
 
     float f = i;
     double d = i;
-````
+```
 
 ### Referências
 #### Downcasting
 É necessário casting explícito;
-````Java
+```Java
     String s = (String) new Object();
     System.out.println(s.concat("oi"));
-````
+```
 Compila mas resulta em Exception em runtime. ` java.lang.ClassCastException: class java.lang.Object cannot be cast to class java.lang.String (java.lang.Object and java.lang.String`.
 
 #### Upcasting
 Vale a regra de que um tipo menor "cabe" em um tipo maior sem casting explícito.
-````Java
+```Java
     Object o = new String("oi");
-````
+```
 Compila mas a referência `o` não possuirá os métodos de `String`, somente de `Object`.  
 Ao tentar chamar um método de `String`, o código não compila.
-````Java
+```Java
     Object o = new String("oi");
     // System.out.println(o.concat("oi")); NÃO COMPILA!
-````
+```
 > Quem determina os métodos é a **referência**.  
 Quem determina como os métodos são implementados é o **objeto**.
 
@@ -184,7 +184,7 @@ Escopo é a região onde um membro pode ser utilizado no programa, através de s
 
 ### Shadowing
 É permitido que variávis locais e variáveis membro tenham o mesmo nome. As variáveis locais terão precedência no uso direto, com nome simples.
-````Java
+```Java
 class Pessoa {
     String nome; //1
 
@@ -194,9 +194,9 @@ class Pessoa {
     }
 }
 // Será retornado o conteúdo de //2
-````
+```
 Outro exemplo
-````Java
+```Java
 class Pessoa {
     String nome; //1
 
@@ -206,22 +206,22 @@ class Pessoa {
     }
 }
 // Será retornado o conteúdo de //1
-````
+```
 ### Problemas comuns em escopo
 #### Redeclarar parâmetro
 Parâmetros contam como variáveis definidas no escopo e não podem ser redeclaradas.
-````Java
+```Java
 int soma(int n1, int n2) {
     int n1 = 0; // compile error
 }
-````
+```
 
 #### Redeclarar acumulador
 A primeira seção de um for é reservado para declarar variávies. Portanto não é permitido que possuam o mesmo nome de variáveis existentes no escopo
-````Java
+```Java
 int j = 0;
 for (int i = 1, j = 2;;) {} // compile error
-````
+```
 
 ## <a id="operadores"></a> Operadores
 ### Precedência de operações

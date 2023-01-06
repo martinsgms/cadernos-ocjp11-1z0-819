@@ -180,6 +180,48 @@ Ao tentar chamar um método de `String`, o código não compila.
 Quem determina como os métodos são implementados é o **objeto**.
 
 ## <a id="escopo"></a> Escopo
+Escopo é a região onde um membro pode ser utilizado no programa, através de seu nome simples. É delimitado por `{}`.
+
+### Shadowing
+É permitido que variávis locais e variáveis membro tenham o mesmo nome. As variáveis locais terão precedência no uso direto, com nome simples.
+````Java
+class Pessoa {
+    String nome; //1
+
+    String getNome() {
+        String nome = "teste"; //2
+        return nome;
+    }
+}
+// Será retornado o conteúdo de //2
+````
+Outro exemplo
+````Java
+class Pessoa {
+    String nome; //1
+
+    String getNome() {
+        String nome = "teste"; //2
+        return this.nome;
+    }
+}
+// Será retornado o conteúdo de //1
+````
+### Problemas comuns em escopo
+#### Redeclarar parâmetro
+Parâmetros contam como variáveis definidas no escopo e não podem ser redeclaradas.
+````Java
+int soma(int n1, int n2) {
+    int n1 = 0; // compile error
+}
+````
+
+#### Redeclarar acumulador
+A primeira seção de um for é reservado para declarar variávies. Portanto não é permitido que possuam o mesmo nome de variáveis existentes no escopo
+````Java
+int j = 0;
+for (int i = 1, j = 2;;) {} // compile error
+````
 
 ## <a id="operadores"></a> Operadores
 ### Precedência de operações
@@ -202,4 +244,4 @@ Quem determina como os métodos são implementados é o **objeto**.
 - Literais inteiros são `int`
 - Literais decimais são `float`
 - Em `double` e `float` não ocorre overflow
-- `null` não é um valor válido para tipos primitivos.6
+- `null` não é um valor válido para tipos primitivos.

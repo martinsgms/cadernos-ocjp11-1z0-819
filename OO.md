@@ -167,9 +167,12 @@ public static final int ZERO = 0;
 
 ## Herança
 O Java suporta 3 tipos de herança:
-- [1-1] Herança de **estado** (*inheritance of state*): atributos
-- [1-1] Herança de **implementação** (*inheritance of implementation*): métodos
+- [1-1] Herança de **estado** (*inheritance of state*): atributos de instância.
+- [1-1] Herança de **implementação** (*inheritance of implementation*): métodos de instância
 - [1-N] Herança de **tipo** (*inheritance of type*): classe ou interface (*is a*).
+
+Estado é representado por atributos de instância em classes. Considerando que uma classe pode herdar apenas uma classe, logo, **não há suporte para herança múltipla de estado**.  
+Por outro lado, é possível implementar N interfaces em uma classe, portanto, **é possível a herança múltipla de tipo.**
 
 Toda classe é subclasse de `java.lang.Object`.  
 Para declarar uma herança explícita, usa-se a palavra `extends`.
@@ -205,3 +208,24 @@ Ocorre para:
 - **atributo estático:** criando um atributo estático com o mesmo nome e tipo da superclasse.
 - **método estático:** criando um método estático com o meesmo nome e parâmetos da superclasse
 - **método de instância:** não ocorre *hiding*, mas *overriding*
+
+## Polymorphism Casting Object vs Referências
+
+Não é possível alterar o tipo de referência de uma variável.
+````Java
+Object s = "oi";
+String s = "oi";
+````
+Não é possível atribuir um valor que não é derivado do tipo da variável (em tempo de compilação).
+````Java
+Thread t = "oi"; 
+````
+**Polimorfismo ocorre em runtime** e serve para forçarmos um objeto a tomar uma forma diferente para produzir um resultado desejado.  
+Para sinalizar esta "troca" ao compilador, usamos o **casting**, que pode ser usado em 
+- atribuições
+- expressões
+- em parâmetros  
+
+O casting pode ter duas direções:
+- **Downcasting**: casting para um tipo **mais específico**
+- **Upcasting**: casting para um tipo **mais genérico**

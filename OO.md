@@ -165,6 +165,96 @@ int ZERO = 0;
 public static final int ZERO = 0;
 ````
 
+### Ambiguidade e Conflito
+
+#### Entre métodos default de duas interfaces distintas
+Uma classe, ao implementar (direta ou indiretamente) duas interfaces que possuam métodos default idênticos, irá gerar ambiguidade, logo, erro de compilação, como se vê no caso abaixo.
+````Java
+interface House {
+	public default String getAddress() {
+		return "House";
+	}
+}
+
+interface Office {
+	public default String getAddress() {
+		return "Office";
+	}
+}
+
+class HomeOffice implements House, Office { // 1 - compile error
+	
+}
+````
+Abaixo, exemplo deste mesmo caso através de herança indireta (ao extender `HomeOffice`, a classe `CoffeOffice` inderetamente também implementa `Office`, resultando no mesmo caso acima)
+````Java
+interface House {
+	public default String getAddress() {
+		return "House";
+	}
+}
+
+interface Office {
+	public default String getAddress() {
+		return "Office";
+	}
+}
+
+class HomeOffice implements Office {
+	
+}
+
+class CoffeOffice extends HomeOffice implements House { // 1 - compile error
+	
+}
+// 1 = Duplicate default methods named getAddress with the parameters () and () are inherited from the types Office and House
+````
+##### Solução
+Para solucionar este conflito, a classe deve prover sua própria implementação do método `getAddress()`.
+````Java
+interface House {
+	public default String getAddress() {
+		return "House";
+	}
+}
+
+interface Office {
+	public default String getAddress() {
+		return "Office";
+	}
+}
+
+class HomeOffice implements House, Office {
+    public String getAddress() {
+		return "HomeOffice";
+	}
+}
+````
+Segundo exemplo:
+````Java
+interface House {
+	public default String getAddress() {
+		return "House";
+	}
+}
+
+interface Office {
+	public default String getAddress() {
+		return "Office";
+	}
+}
+
+class HomeOffice implements Office {
+	
+}
+
+class CoffeOffice extends HomeOffice implements House { 
+	public String getAddress() {
+		return "Office";
+	}
+	
+}
+````
 ## Herança
 O Java suporta 3 tipos de herança:
 - [1-1] Herança de **estado** (*inheritance of state*): atributos de instância.

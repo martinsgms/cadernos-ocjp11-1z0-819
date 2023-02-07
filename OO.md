@@ -123,6 +123,9 @@ A principal vantagem do poliforfismo é poder chamar uma classe sem saber qual c
 representa uma ***intenção geral*, que pode tomar diferentes *formas específicas*** (polimorfismo). É o mais alto nível de abstração e de baixo acoplamento possível ao definir uma classe.  
 Exemplo: A *intenção geral* é calcular um imposto, e eu posso calcular diferentes impostos, cada um de *forma específica*.  
 
+> É uma forma de definir um (ou N) comportamento que será comum para um diferentes tipos. Cada tipo decide a forma como vai desempenhar o comportamento.
+
+Interfaces mais conhecidas: `java.lang.Comparable`, `java.util.List`...
 
 ````Java
 public interface Imposto {
@@ -132,6 +135,33 @@ public interface Imposto {
 ````
 
 > Interfaces são ótimas para implementar polimorfismo. A intenção que definem pode tomar diferentes formas baseado no objeto que foi criado.
+
+Além disso, **Interfaces são stateless**, isto é, não possuem estado, não carregam valores.
+
+### O que é permitido em Interfaces
+Uma interface pode conter...
+- constantes: todas as variáveis são `public static final` por padrão.
+- assinaturas de métodos
+- métodos `private`* (java 9)
+- métodos `default`* (java 8)
+- métodos `static`* (java 8)
+- *nested types (inner class, enum, interface)*
+
+\* Apenas estes métodos devem possuir *body*. (`d.p.s`)
+
+### Quem pode sobrescrever quem
+
+| super/sub | default | static | private |
+|---------|---------|---------|---------|
+| **private** | :x: | :x: | :x:
+| **default** | :white_check_mark: | :x: | :x:
+| **static** | :white_check_mark: | :white_check_mark: | :x:
+
+### Hiding
+Métodos `default` podem "esconder" métodos abstratos
+
+### Functional Interface
+São interfaces que possuem **apenas um** método abstrato
 
 ### Particularidades
 #### 1. Modificador *default* em métodos
@@ -255,6 +285,33 @@ class CoffeOffice extends HomeOffice implements House {
 	
 }
 ````
+#### Entre métodos abstratos de duas interfaces distintas
+Regra: o método sobrescrito deve satisfazer as duas interfaces, ao mesmo tempo, caso contrário, ocorrerá erro de compilação.  
+O caso abaixo é um exemplo da regra acima.
+
+````Java
+interface House {
+	public Number getNumber();
+}
+
+interface Office {
+	public Integer getNumber();
+}
+
+class HomeOffice implements House, Office {
+	@Override
+	public Integer getNumber() {
+		return 0;
+	}
+}
+````
+#### Entre constantes de duas interfaces distintas
+
+### Interface x Classe abstrata
+Escolha Interface para agrupar comportamentos em comum que podem ser customizáveis.  
+Escolha Classe Abstrata quando os objetos concretos terão comportamentos em comum
+
+
 ## Herança
 O Java suporta 3 tipos de herança:
 - [1-1] Herança de **estado** (*inheritance of state*): atributos de instância.
@@ -319,3 +376,20 @@ Para sinalizar esta "troca" ao compilador, usamos o **casting**, que pode ser us
 O casting pode ter duas direções:
 - **Downcasting**: casting para um tipo **mais específico**
 - **Upcasting**: casting para um tipo **mais genérico**
+
+## Sobrescrita de métodos
+Checklist para identificar uma sobrescrita válida, observar:
+- nome (devem ser iguais)
+- parâmetros (devem ser iguais)
+- retorno (tipo ou subtipo)
+- throws (nenhum, tipo ou subtipo)
+
+### Casos específicos
+*Generic type erasure*: **Em parâmetros**, o método da subclasse pode "apagar" o tipo genérico da superclasse. Mas não o contrário.
+````Java
+// superclass signature
+transform(Set<Integer> list)
+// valid overriding
+transform(Set<Integer> list)
+transform(Set list)
+````

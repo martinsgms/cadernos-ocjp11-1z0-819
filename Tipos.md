@@ -177,7 +177,7 @@ Ao tentar chamar um método de `String`, o código não compila.
     // System.out.println(o.concat("oi")); NÃO COMPILA!
 ```
 > Quem determina os métodos é a **referência**.  
-Quem determina como os métodos são implementados é o **objeto**.
+Quem determina como os métodos são implementados é o **objeto**. (não necessariamente apenas dentro de sua classe)
 
 ## <a id="escopo"></a> Escopo
 Escopo é a região onde um membro pode ser utilizado no programa, através de seu nome simples. É delimitado por `{}`.
